@@ -18,7 +18,12 @@ require 'config.php';
       </div>
 
       <?php
-      $categories = mysqli_query($connection, "SELECT * FROM `articles_categories`")
+      
+      $categoriesq = mysqli_query($connection, "SELECT * FROM `articles_categories`");
+      $categories = array();
+      while ($cat = mysqli_fetch_assoc($categoriesq)){
+        $categories[]=$cat;
+      }
       ?>
 
       <div class="header__bottom">
@@ -26,9 +31,9 @@ require 'config.php';
           <nav>
             <ul>
             <?php
-               while ($cat = mysqli_fetch_assoc($categories)) {
+               foreach ($categories as $cat)  {
             ?>
-            <li><a href="/categories.php?id=<?php echo $cat['id']; ?>"><?php echo $cat['title']; ?></a></li>
+            <li><a href="/categorie.php?id=<?php echo $cat['id']; ?>"><?php echo $cat['title']; ?></a></li>
             <?php    
                }
             ?>

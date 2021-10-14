@@ -121,7 +121,11 @@ body {
     .block > a:hover {
       border-bottom: 1px solid #333; }
   .block .block__content {
+    
     padding-top: 40px; }
+    .block .block__content image{
+      max-width: 600px;
+    }
 
 .articles.articles__horizontal {
   font-size: 0;
@@ -149,8 +153,8 @@ body {
   height: 0; }
 
 .articles .article .article__image {
-  width: 125px;
-  height: 125px;
+  width: 80px;
+  height: 80px;
   overflow: hidden;
   background-color: black;
   float: left;

@@ -11,64 +11,75 @@
               <div class="block__content">
                 <div class="articles articles__vertical">
 
-                  <article class="article">
-                    <div class="article__image" style="background-image: url(/media/images/post-image.jpg);"></div>
+              
+                <?php
+                  $articles = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `views` DESC LIMIT 5")
+                ?>
+                 <?php
+                  while ($art = mysqli_fetch_assoc($articles))
+                   {
+                    ?>
+                     <article class="article">
+                    <div class="article__image" style="background-image: url(/static/images/<?php echo $art['image']; ?>);"></div>
                     <div class="article__info">
-                      <a href="#">Название статьи</a>
+                      <a href="/article.php?categorie=<?php echo $art['id']; ?>"><?php echo $art['title']; ?></a>
                       <div class="article__info__meta">
-                        <small>Категория: <a href="#">Программирование</a></small>
+                      <?php 
+                      $art_cat = false;
+                      foreach ($categories as $cat) {
+                        if ($cat['id'] == $art['categories_id']) {
+                          $art_cat = $cat;
+                          break;
+                        }
+                      }
+                       ?>
+                          <small>Категория: <a href="/articles.php?categorie=<?php echo $art_cat['id']; ?>"><?php echo $art_cat['title']; ?></a></small>
                       </div>
-                      <div class="article__info__preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ...</div>
+                      <div class="article__info__preview"><?php echo mb_substr($art['text'], 0, 50, 'utf-8').'...'; ?></div>
                     </div>
                   </article>
+                  <?php
+                  }
+                  ?> 
 
-                  <article class="article">
-                    <div class="article__image" style="background-image: url(/media/images/post-image.jpg);"></div>
-                    <div class="article__info">
-                      <a href="#">Название статьи</a>
-                      <div class="article__info__meta">
-                        <small>Категория: <a href="#">Программирование</a></small>
-                      </div>
-                      <div class="article__info__preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ...</div>
-                    </div>
-                  </article>
-
-                  <article class="article">
-                    <div class="article__image" style="background-image: url(/media/images/post-image.jpg);"></div>
-                    <div class="article__info">
-                      <a href="#">Название статьи</a>
-                      <div class="article__info__meta">
-                        <small>Категория: <a href="#">Программирование</a></small>
-                      </div>
-                      <div class="article__info__preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ...</div>
-                    </div>
-                  </article>
-
-                  <article class="article">
-                    <div class="article__image" style="background-image: url(/media/images/post-image.jpg);"></div>
-                    <div class="article__info">
-                      <a href="#">Название статьи</a>
-                      <div class="article__info__meta">
-                        <small>Категория: <a href="#">Программирование</a></small>
-                      </div>
-                      <div class="article__info__preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ...</div>
-                    </div>
-                  </article>
-
-                  <article class="article">
-                    <div class="article__image" style="background-image: url(/media/images/post-image.jpg);"></div>
-                    <div class="article__info">
-                      <a href="#">Название статьи</a>
-                      <div class="article__info__meta">
-                        <small>Категория: <a href="#">Программирование</a></small>
-                      </div>
-                      <div class="article__info__preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ...</div>
-                    </div>
-                  </article>
+                
+          
 
                 </div>
               </div>
             </div>
+
+            <div class="block">
+              <h3>Комментарии</h3>
+              <div class="block__content">
+                <div class="articles articles__vertical">
+
+              
+                <?php
+                  $comments = mysqli_query($connection, "SELECT * FROM `comments` ORDER BY `id` DESC LIMIT 5")
+                ?>
+                 <?php
+                  while ($comment = mysqli_fetch_assoc($comments))
+                   {
+                    ?>
+                     <article class="article">
+                    <div class="article__image" style="background-image: url(https://www.gravatar.com/avatar/<?php echo md5($comment['email']); ?>);"></div>
+                    <div class="article__info">
+                    
+                      <a href="/article.php?categorie=<?php echo $comment['articles_id']; ?>"><?php echo $comment['author']; ?></a>
+                      
+                      <div class="article__info__preview"><?php echo mb_substr($comment['text'], 0, 50, 'utf-8').'...'; ?></div>
+                    </div>
+                  </article>
+                  <?php
+                  }
+                  ?> 
+
+                </div>
+              </div>
+            </div>
+
+
 
 
 
